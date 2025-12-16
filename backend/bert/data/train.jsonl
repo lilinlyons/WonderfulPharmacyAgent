@@ -1,0 +1,199 @@
+{"text": "Hello", "label": 0}
+{"text": "Hi there", "label": 0}
+
+{"text": "What is Augmentin?", "label": 1}
+{"text": "Tell me about Ventolin", "label": 1}
+
+{"text": "What is the active ingredient in Augmentin?", "label": 2}
+
+{"text": "Is Augmentin prescription only?", "label": 3}
+
+{"text": "How much Ventolin should I take?", "label": 4}
+
+{"text": "Do you have Ventolin in stock?", "label": 5}
+
+{"text": "Can you refill my prescription?", "label": 6}
+
+{"text": "Should I take this for chest pain?", "label": 7}
+
+{"text": "Are these side effects dangerous?", "label": 8}
+
+{"text": "Can I combine this with ibuprofen?", "label": 9}
+
+{"text": "I have a problem with my order", "label": 10}
+
+{"text":"Hello","label":0}
+{"text":"Hi","label":0}
+{"text":"Hey there","label":0}
+{"text":"Good morning","label":0}
+{"text":"Good evening","label":0}
+{"text":"שלום","label":0}
+{"text":"היי","label":0}
+{"text":"מה נשמע","label":0}
+{"text":"Hi pharmacist","label":0}
+{"text":"Hello assistant","label":0}
+{"text":"Hey","label":0}
+{"text":"Hi, I have a question","label":0}
+{"text":"שלום, יש לי שאלה","label":0}
+{"text":"Good afternoon","label":0}
+{"text":"Hey, can you help me","label":0}
+
+{"text":"Is Augmentin prescription only?","label":3}
+{"text":"Do I need a prescription for Ventolin?","label":3}
+{"text":"Is this medication over the counter?","label":3}
+{"text":"Can I buy this without a prescription?","label":3}
+{"text":"Is Claritin prescription free?","label":3}
+{"text":"Does this require a doctor prescription?","label":3}
+{"text":"צריך מרשם לאוגמנטין?","label":3}
+{"text":"האם צריך מרשם למשאף?","label":3}
+{"text":"Is this an Rx drug?","label":3}
+{"text":"Prescription required?","label":3}
+{"text":"Can I get this without seeing a doctor?","label":3}
+{"text":"Is this medicine regulated?","label":3}
+{"text":"OTC or prescription?","label":3}
+{"text":"Is this behind the counter?","label":3}
+{"text":"Do pharmacies sell this freely?","label":3}
+
+{"text":"What is the active ingredient in Augmentin?","label":2}
+{"text":"What is Ventolin made of?","label":2}
+{"text":"Active ingredient of Acamol","label":2}
+{"text":"What chemical is in Nurofen?","label":2}
+{"text":"What is the main ingredient in Claritin?","label":2}
+{"text":"חומר פעיל של אקמול","label":2}
+{"text":"מה החומר הפעיל בנורופן","label":2}
+{"text":"Which ingredient actually works in this drug?","label":2}
+{"text":"What substance treats the symptoms?","label":2}
+{"text":"Is this paracetamol?","label":2}
+{"text":"Does it contain ibuprofen?","label":2}
+{"text":"What is the generic ingredient?","label":2}
+{"text":"What active compound is used?","label":2}
+{"text":"Main ingredient?","label":2}
+{"text":"What is inside this medication?","label":2}
+
+{"text":"What is the active ingredient in Augmentin?","label":2}
+{"text":"What is Ventolin made of?","label":2}
+{"text":"Active ingredient of Acamol","label":2}
+{"text":"What chemical is in Nurofen?","label":2}
+{"text":"What is the main ingredient in Claritin?","label":2}
+{"text":"חומר פעיל של אקמול","label":2}
+{"text":"מה החומר הפעיל בנורופן","label":2}
+{"text":"Which ingredient actually works in this drug?","label":2}
+{"text":"What substance treats the symptoms?","label":2}
+{"text":"Is this paracetamol?","label":2}
+{"text":"Does it contain ibuprofen?","label":2}
+{"text":"What is the generic ingredient?","label":2}
+{"text":"What active compound is used?","label":2}
+{"text":"Main ingredient?","label":2}
+{"text":"What is inside this medication?","label":2}
+
+{"text":"How much Ventolin should I take?","label":4}
+{"text":"What is the dosage for Acamol?","label":4}
+{"text":"How often can I take Nurofen?","label":4}
+{"text":"Dosage instructions for Claritin","label":4}
+{"text":"What is the recommended dose?","label":4}
+{"text":"How many tablets per day?","label":4}
+{"text":"מינון של אקמול","label":4}
+{"text":"כמה פעמים ביום מותר לקחת","label":4}
+{"text":"How should this be taken?","label":4}
+{"text":"What does the label say about dosage?","label":4}
+{"text":"How much is safe according to the leaflet?","label":4}
+{"text":"Maximum daily dose?","label":4}
+{"text":"How many pills are allowed?","label":4}
+{"text":"Usage instructions please","label":4}
+{"text":"Dose information","label":4}
+
+{"text":"Do you have Ventolin in stock?","label":5}
+{"text":"Is Augmentin available today?","label":5}
+{"text":"Check stock for Acamol","label":5}
+{"text":"Do you have Claritin in Jerusalem?","label":5}
+{"text":"Is this medication available now?","label":5}
+{"text":"How many units are in stock?","label":5}
+{"text":"יש במלאי נורופן?","label":5}
+{"text":"האם התרופה זמינה","label":5}
+{"text":"Availability of Ventolin","label":5}
+{"text":"Can I find this at your store?","label":5}
+{"text":"Is it out of stock?","label":5}
+{"text":"Stock status please","label":5}
+{"text":"Is this sold out?","label":5}
+{"text":"Do you have it today?","label":5}
+{"text":"Check inventory","label":5}
+
+{"text":"Can you refill my prescription?","label":6}
+{"text":"I want to request a refill","label":6}
+{"text":"Refill my medication","label":6}
+{"text":"Do I have refills left?","label":6}
+{"text":"Can I renew my prescription?","label":6}
+{"text":"בקשה לחידוש מרשם","label":6}
+{"text":"אפשר חידוש תרופה?","label":6}
+{"text":"Request prescription refill","label":6}
+{"text":"Can you check my refills?","label":6}
+{"text":"I need another supply","label":6}
+{"text":"Is my prescription still active?","label":6}
+{"text":"Can I order a refill?","label":6}
+{"text":"Renew prescription please","label":6}
+{"text":"I ran out of my medication","label":6}
+{"text":"Refill request for Augmentin","label":6}
+
+{"text":"Should I take this for chest pain?","label":7}
+{"text":"Is this safe for my condition?","label":7}
+{"text":"What should I take for fever?","label":7}
+{"text":"Can I use this while pregnant?","label":7}
+{"text":"Do you recommend this drug?","label":7}
+{"text":"Is this good for high blood pressure?","label":7}
+{"text":"מה כדאי לקחת לכאבי ראש","label":7}
+{"text":"זה בטוח בשבילי?","label":7}
+{"text":"Which medicine is best for me?","label":7}
+{"text":"Should I start this medication?","label":7}
+{"text":"Is this the right treatment?","label":7}
+{"text":"Would you advise taking this?","label":7}
+{"text":"What do you suggest I take?","label":7}
+{"text":"Is this dangerous for me?","label":7}
+{"text":"What medicine should I choose?","label":7}
+
+{"text":"Are these side effects dangerous?","label":8}
+{"text":"I feel dizzy after taking this","label":8}
+{"text":"Is nausea a bad sign?","label":8}
+{"text":"What if I have side effects?","label":8}
+{"text":"Should I stop if I feel pain?","label":8}
+{"text":"יש לי תופעות לוואי","label":8}
+{"text":"זה גורם לי סחרחורת","label":8}
+{"text":"Is headache a side effect?","label":8}
+{"text":"Are these symptoms normal?","label":8}
+{"text":"What if I feel worse?","label":8}
+{"text":"Is this reaction serious?","label":8}
+{"text":"Side effects concern","label":8}
+{"text":"I’m worried about side effects","label":8}
+{"text":"Is this allergic reaction?","label":8}
+{"text":"Can side effects be harmful?","label":8}
+
+{"text":"Can I combine this with ibuprofen?","label":9}
+{"text":"Is it safe to take with paracetamol?","label":9}
+{"text":"Drug interactions with Ventolin","label":9}
+{"text":"Can I take this with another medicine?","label":9}
+{"text":"Does this interact with alcohol?","label":9}
+{"text":"אפשר לשלב עם תרופה אחרת?","label":9}
+{"text":"זה מתנגש עם תרופות אחרות?","label":9}
+{"text":"Is mixing medications safe?","label":9}
+{"text":"Can these be taken together?","label":9}
+{"text":"Interaction with antibiotics?","label":9}
+{"text":"Is there a conflict with my meds?","label":9}
+{"text":"Can I use this alongside others?","label":9}
+{"text":"Are there interaction risks?","label":9}
+{"text":"Does this interfere with other drugs?","label":9}
+{"text":"Combining medications question","label":9}
+
+{"text":"I have a problem with my order","label":10}
+{"text":"Customer support please","label":10}
+{"text":"I need help with my account","label":10}
+{"text":"There is an issue with delivery","label":10}
+{"text":"My receipt is missing","label":10}
+{"text":"בעיה בהזמנה","label":10}
+{"text":"צריך תמיכה","label":10}
+{"text":"I want to file a complaint","label":10}
+{"text":"Payment problem","label":10}
+{"text":"I was charged incorrectly","label":10}
+{"text":"Need help with purchase","label":10}
+{"text":"Support request","label":10}
+{"text":"Problem with service","label":10}
+{"text":"Order not arrived","label":10}
+{"text":"Can you help me with billing?","label":10}

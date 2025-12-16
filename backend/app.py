@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from openai import OpenAI
 from policy_prompt import SYSTEM_PROMPT
 from dotenv import load_dotenv
+from bert.classifier import classify_intent
+from router import route
 
 load_dotenv()
 
@@ -26,11 +28,24 @@ async def chat(req: Request):
     body = await req.json()
     user_message = body.get("message", "")
 
+    intent = classify_intent(user_message)
+    print("Intent classified to:", intent)
+    handler = route(intent)
+
+    workflow_result = handler(user_message)
+    system_context = workflow_result.get("context", "")
+
     def event_stream():
-        response = client.responses.create(
-            model="gpt-5",  # or gpt-4o if needed
-            input=[
+        print("prompt:", [
                 {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": system_context},
+                {"role": "user", "content": user_message}]
+           )
+        response = client.responses.create(
+            model="gpt-5",
+            input=[
+                # {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": system_context},
                 {"role": "user", "content": user_message},
             ],
             stream=True,
