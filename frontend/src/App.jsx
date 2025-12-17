@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
+import PharmacistDashboard from "./components/PharmacistDashboard";
 
 /* ---------------- I18N ---------------- */
 const I18N = {
@@ -73,6 +74,7 @@ export default function PharmaChat() {
   const [showRequests, setShowRequests] = useState(true);
   const [showSupport, setShowSupport] = useState(true);
 
+  const [dashboardData, setDashboardData] = useState(null);
   /* ---------------- LOAD USERS ---------------- */
   useEffect(() => {
     fetch(`${apiBase}/users`)
@@ -91,13 +93,33 @@ export default function PharmaChat() {
   const isRTL = lang === "he";
 
   /* ---------------- RESET CHAT ON USER CHANGE ---------------- */
-  useEffect(() => {
-    if (!activeUser) return;
+useEffect(() => {
+  if (!activeUser) return;
 
-    sessionIdRef.current = crypto.randomUUID();
+  sessionIdRef.current = crypto.randomUUID();
+  setMessages([]);
+  setDashboardData(null);
+
+  if (activeUser.role === "pharmacist") {
+    fetch(`${apiBase}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "",
+        session_id: sessionIdRef.current,
+        user_id: activeUser.id,
+        preferred_lang: activeUser.lang,
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => setDashboardData(data))
+      .catch(() => setDashboardData({ error: true }));
+  } else {
     setMessages([{ role: "assistant", content: t.greeting(activeUser.full_name) }]);
     refreshSidebar();
-  }, [activeUser, lang]);
+  }
+}, [activeUser, lang]);
+
 
   /* ---------------- SAFE AUTO SCROLL ---------------- */
   useEffect(() => {
@@ -127,6 +149,7 @@ export default function PharmaChat() {
 
   /* ---------------- SEND MESSAGE ---------------- */
   const send = async () => {
+    if (activeUser.role === "pharmacist") return;
     if (!activeUser || !input.trim() || loading) return;
 
     const text = input.trim();
@@ -173,7 +196,74 @@ export default function PharmaChat() {
     }
   };
 
-  if (!activeUser) return <div>Loading…</div>;
+  if (!activeUser)
+  return (
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg,#f0f9ff,#e0e7ff)",
+        fontFamily: "system-ui",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <div style={{ position: "relative", width: 220, height: 220, margin: "0 auto" }}>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "999px",
+              border: "3px solid rgba(79,70,229,0.25)",
+              animation: "radar 1.6s ease-out infinite",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "999px",
+              border: "3px solid rgba(79,70,229,0.18)",
+              animation: "radar 1.6s ease-out infinite",
+              animationDelay: "0.8s",
+            }}
+          />
+
+          <img
+            src="/download.jpeg"
+            alt="loading"
+            style={{
+              width: 180,
+              height: 180,
+              borderRadius: "999px",
+              objectFit: "cover",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+            }}
+          />
+        </div>
+
+        <div style={{ marginTop: "1rem", color: "#111827", fontWeight: 600 }}>
+          Loading…
+        </div>
+
+        <style>
+          {`
+            @keyframes radar {
+              0% { transform: scale(0.75); opacity: 0.0; }
+              15% { opacity: 1.0; }
+              100% { transform: scale(1.25); opacity: 0.0; }
+            }
+          `}
+        </style>
+      </div>
+    </div>
+  );
+
 
   /* ---------------- RENDER ---------------- */
   return (
@@ -222,6 +312,10 @@ export default function PharmaChat() {
 
       {/* BODY */}
       <div style={{ flex: 1, display: "flex", minHeight: 0 }}>
+        {activeUser.role === "pharmacist" ? (
+          <PharmacistDashboard data={dashboardData} />
+        ) : (
+          <>
         {/* CHAT */}
         <div
           style={{
@@ -337,9 +431,12 @@ export default function PharmaChat() {
               </div>
             ))}
         </div>
+              </>
+          )}
       </div>
 
       {/* INPUT */}
+      {activeUser.role !== "pharmacist" && (
       <div style={{ padding: "1rem", background: "white" }}>
         <div style={{ display: "flex", gap: "1rem" }}>
           <textarea
@@ -385,6 +482,7 @@ export default function PharmaChat() {
           </button>
         </div>
       </div>
+          )}
     </div>
   );
 }
