@@ -1,14 +1,12 @@
 # workflows/active_ingredients.py
-from utils.workflow_logger import get_workflow_logger
+from utils.logging_utils.workflow_logger import get_workflow_logger
 from workflows.utils.fetch_medication import get_medication_by_name
 
-logger = get_workflow_logger()
-
-
-def handle(message: str):
+def handle(message: str, user_id: str | None = None):
     """
     Workflow: Active ingredients lookup
     """
+    logger = get_workflow_logger(user_id)
     logger.info("Workflow started")
     logger.info("Input message: %s", message)
 

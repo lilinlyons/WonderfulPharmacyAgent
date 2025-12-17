@@ -1,4 +1,4 @@
-def handle(message: str):
+def handle(message: str, user_id: str | None = None):
     return {
         "type": "fallback",
         "context": (

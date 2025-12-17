@@ -1,18 +1,21 @@
 import os
+
+import time
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from openai import OpenAI
 from dotenv import load_dotenv
+
+from agents.context_agent import ContextAgent
+from agents.execution_agent import ExecutionAgent
+from agents.intent_agent import IntentAgent
 from utils.get_prescriptions_per_user import get_prescription_per_user
+from utils.get_support_per_user import get_support_per_user
 from workflows.utils.fetch_users import fetch_users
 from bert.labels import Intent
 from utils.policy_prompt import SYSTEM_PROMPT
-from bert.classifier import classify_intent
-from router import route
-from utils.rephrase_question import rephrase_with_context
-from utils.session_logger import get_session_logger
-from utils.session_state import get_prev_message, set_prev_message
+from utils.logging_utils.session_logger import get_session_logger
 
 
 load_dotenv()
@@ -46,9 +49,8 @@ async def chat(req: Request):
     session_id = body.get("session_id", "anonymous")
     user_id = body.get("user_id")
 
-    prev_message = get_prev_message(session_id)
 
-    logger = get_session_logger(session_id)
+    logger = get_session_logger(session_id, user_id)
     logger.info("New request received")
 
     if not user_message:
@@ -59,31 +61,17 @@ async def chat(req: Request):
         )
 
     logger.info("User message: %s", user_message)
-    logger.info("Prev message: %s", prev_message)
+    print(ContextAgent(client, logger).process(session_id, user_message, user_id))
 
+    user_message = ContextAgent(client, logger).process(session_id, user_message, user_id)
+    print("user message:",user_message)
 
-    if prev_message:
-        try:
-            logger.info("Rephrasing with previous context")
-            user_message = rephrase_with_context(
-                client, user_message, prev_message
-            )
-            logger.info("Rephrased message: %s", user_message)
-        except Exception:
-            logger.exception("Rephrasing failed")
-
-    # ALWAYS store the final message for the NEXT request
-    set_prev_message(session_id, user_message)
-
-    # Intent classification
     try:
-        intent = classify_intent(user_message)
-        logger.info("Intent: %s", intent)
+        intent = IntentAgent(logger).process(user_message, user_id)
     except Exception:
         logger.exception("Intent classification failed")
         intent = Intent.UNKNOWN
 
-    # Routing
     if intent == Intent.UNKNOWN:
         system_context = ""
         user_prompt = (
@@ -93,15 +81,9 @@ async def chat(req: Request):
         logger.info("Handled UNKNOWN intent")
     else:
         try:
-            handler = route(intent)
-
-            workflow_result = handler(
-                user_message,
-                user_id=user_id,
-            )
-
-            system_context = workflow_result.get("context", "")
-            user_prompt = user_message
+            user_prompt, system_context = ExecutionAgent(logger, intent).execute(user_message, user_id)
+            print("user prompt:", user_prompt)
+            print("system_cotext", system_context)
             logger.info("Workflow executed successfully")
         except Exception:
             logger.exception("Workflow failed")
@@ -111,6 +93,9 @@ async def chat(req: Request):
             )
 
     def event_stream():
+        start_time = time.monotonic()
+        timeout_seconds = 60
+
         try:
             response = client.responses.create(
                 model="gpt-5",
@@ -123,6 +108,12 @@ async def chat(req: Request):
             )
 
             for event in response:
+                # timeout check
+                if time.monotonic() - start_time > timeout_seconds:
+                    logger.error("LLM streaming timed out after 20 seconds")
+                    yield " Sorry, the request timed out. Please try again."
+                    return
+
                 if event.type == "response.output_text.delta" and event.delta:
                     yield event.delta
 
@@ -159,6 +150,10 @@ def get_users():
 @app.get("/prescription-requests/{user_id}")
 def get_prescription_requests(user_id: str):
     return get_prescription_per_user(user_id)
+
+@app.get("/support-requests/{user_id}")
+def get_support_requests(user_id: str):
+    return get_support_per_user(user_id)
 
 @app.get("/health")
 def health():

@@ -100,6 +100,7 @@ def seed():
       ("p4", "u10", "m4", "active", 2, "2026-06-15"),
         ("p6", "u5", "m3", "expired", 1, "2026-03-01"),
     ]
+
     cur.executemany("INSERT OR REPLACE INTO prescriptions VALUES (?,?,?,?,?,?)", prescriptions)
 
     c.commit()

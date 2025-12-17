@@ -1,11 +1,10 @@
 # workflows/prescription_requirement.py
 from workflows.utils.fetch_medication import get_medication_by_name
-from utils.workflow_logger import get_workflow_logger
-
-logger = get_workflow_logger()
+from utils.logging_utils.workflow_logger import get_workflow_logger
 
 
 def handle(message: str, user_id: str | None = None):
+    logger = get_workflow_logger(user_id)
     logger.info("Workflow started")
     logger.info("Input message: %s", message)
 
@@ -37,6 +36,6 @@ def handle(message: str, user_id: str | None = None):
         "type": "prescription_requirement",
         "context": (
             f"Medication name: {med['name']}\n"
-            f"Prescription required: {'Yes' if med['rx_required'] else 'No'}"
+            f"Prescription required: {'Yes, please contact your Doctor if you require a prescription.' if med['rx_required'] else 'No'}"
         )
     }

@@ -1,11 +1,12 @@
 # workflows/inventory.py
 from workflows.db.db import conn
 from workflows.utils.fetch_medication import get_medication_by_name
-from utils.workflow_logger import get_workflow_logger
+from utils.logging_utils.workflow_logger import get_workflow_logger
 
-logger = get_workflow_logger()
 
-def handle(message: str):
+
+def handle(message: str, user_id: str | None = None):
+    logger = get_workflow_logger(user_id)
     logger.info("Workflow started")
     logger.info("Input message: %s", message)
 

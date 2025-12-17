@@ -1,11 +1,12 @@
 import uuid
 from datetime import datetime
 from workflows.db.db import conn
-from utils.workflow_logger import get_workflow_logger
+from utils.logging_utils.workflow_logger import get_workflow_logger
 
-logger = get_workflow_logger()
+
 
 def handle(message: str, user_id: str | None = None):
+    logger = get_workflow_logger(user_id)
     logger.info("Support request workflow started")
 
     if not user_id:

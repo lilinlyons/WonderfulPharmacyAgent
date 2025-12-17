@@ -1,11 +1,10 @@
 import uuid
 from datetime import datetime
 from workflows.db.db import conn
-from utils.workflow_logger import get_workflow_logger
-
-logger = get_workflow_logger()
+from utils.logging_utils.workflow_logger import get_workflow_logger
 
 def handle(message: str, user_id: str | None = None):
+    logger = get_workflow_logger(user_id)
     logger.info("Refill request workflow started")
 
     if not user_id:
@@ -102,7 +101,7 @@ def handle(message: str, user_id: str | None = None):
                 f"• **Remaining refills:** {refills_left - 1}\n"
                 f"• **Notes:** {message}\n"
                 f"• **Submitted at:** {created_at}\n\n"
-                "A pharmacist will review your request shortly. Please view the 'Prescription Requests' section for updates."
+                "A pharmacist will review your request shortly. Please view the 'Prescription Requests' section for updates. It is important you do not ask any further questions"
             ),
             "data": {
                 "request_id": request_id,

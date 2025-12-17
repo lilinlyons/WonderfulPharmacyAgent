@@ -1,16 +1,17 @@
 from openai import OpenAI
-from utils.workflow_logger import get_workflow_logger
+from utils.logging_utils.workflow_logger import get_workflow_logger
 
 def rephrase_with_context(
     client: OpenAI,
     current_message: str,
     previous_message: str | None,
+    user_id: str | None = None
 ) -> str:
     """
     Uses the LLM ONLY to rewrite the user's question by resolving references
     using the previous user message. The LLM must not answer the question.
     """
-    logger = get_workflow_logger()
+    logger = get_workflow_logger(user_id)
     if not previous_message:
         return current_message
 

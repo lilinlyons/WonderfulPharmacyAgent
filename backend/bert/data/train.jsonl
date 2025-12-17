@@ -3,6 +3,7 @@
 
 {"text": "What is Augmentin?", "label": 1}
 {"text": "Tell me about Ventolin", "label": 1}
+{"text": "tell me about nurofen", "label": 1}
 
 {"text": "What is the active ingredient in Augmentin?", "label": 2}
 
@@ -13,6 +14,7 @@
 {"text": "Do you have Ventolin in stock?", "label": 5}
 
 {"text": "Can you refill my prescription?", "label": 6}
+{"text": "Can I order it", "label": 6}
 
 {"text": "Should I take this for chest pain?", "label": 7}
 
@@ -127,6 +129,7 @@
 {"text":"Check inventory","label":5}
 
 {"text":"Can you refill my prescription?","label":6}
+{"text":"Can you provide a prescription for Augmentin for me?","label":6}
 {"text":"I want to request a refill","label":6}
 {"text":"Refill my medication","label":6}
 {"text":"Do I have refills left?","label":6}
@@ -135,12 +138,14 @@
 {"text":"אפשר חידוש תרופה?","label":6}
 {"text":"Request prescription refill","label":6}
 {"text":"Can you check my refills?","label":6}
+{"text":"can i have a prescription refill","label":6}
 {"text":"I need another supply","label":6}
 {"text":"Is my prescription still active?","label":6}
 {"text":"Can I order a refill?","label":6}
 {"text":"Renew prescription please","label":6}
 {"text":"I ran out of my medication","label":6}
 {"text":"Refill request for Augmentin","label":6}
+{"text":"i think there is already a prescription for me. please can you check. i want that refilled","label":6}
 
 {"text":"Should I take this for chest pain?","label":7}
 {"text":"Is this safe for my condition?","label":7}
@@ -192,6 +197,9 @@
 
 {"text":"I have a problem with my order","label":10}
 {"text":"Customer support please","label":10}
+{"text":"Please can i have support","label":10}
+{"text":"Can you open a support request for my undelivered package?","label":10}
+{"text":"and can i open another support request for my undelivered package","label":10}
 {"text":"I need help with my account","label":10}
 {"text":"There is an issue with delivery","label":10}
 {"text":"My receipt is missing","label":10}
@@ -199,8 +207,11 @@
 {"text":"צריך תמיכה","label":10}
 {"text":"I want to file a complaint","label":10}
 {"text":"Payment problem","label":10}
+{"text":"yes send me a subscription renewall to my doctor please","label":10}
+{"text":"i need a subscription renewall","label":10}
 {"text":"I was charged incorrectly","label":10}
 {"text":"Need help with purchase","label":10}
+{"text":"Can you open a support ticket for my delivery issue because I don't know where my package is?","label":10}
 {"text":"Support request","label":10}
 {"text":"Problem with service","label":10}
 {"text":"Order not arrived","label":10}

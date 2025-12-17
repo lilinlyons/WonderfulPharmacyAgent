@@ -3,6 +3,6 @@ def handle(user_message: str, user_id: str | None = None):
         "context": """
 I can provide general factual information about medications,
 but I can’t give medical advice or treatment recommendations.
-Please consult a licensed pharmacist or doctor.
+Please consult a licensed pharmacist or doctor, or your local GP at 050-000-000.
 """
     }

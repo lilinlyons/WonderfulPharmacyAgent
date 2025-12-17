@@ -26,24 +26,26 @@ const I18N = {
 /* ---------------- Assistant Typing ---------------- */
 function AssistantTyping() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem" }}>
       <img
         src="/download.jpeg"
         alt="assistant"
         style={{
-          width: 42,
-          height: 42,
+          width: 36,
+          height: 36,
           animation: "pulse 1.2s ease-in-out infinite",
         }}
       />
-      <span style={{ color: "#6b7280" }}>Assistant is typing…</span>
+      <span style={{ color: "#6b7280", fontSize: "14px" }}>
+        Assistant is typing…
+      </span>
 
       <style>
         {`
           @keyframes pulse {
-            0%   { transform: scale(0.85); opacity: 0.7; }
-            50%  { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(0.85); opacity: 0.7; }
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
           }
         `}
       </style>
@@ -59,9 +61,11 @@ export default function PharmaChat() {
 
   const [users, setUsers] = useState([]);
   const [activeUser, setActiveUser] = useState(null);
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hoverSend, setHoverSend] = useState(false);
 
   const [prescriptionRequests, setPrescriptionRequests] = useState([]);
   const [supportRequests, setSupportRequests] = useState([]);
@@ -86,7 +90,7 @@ export default function PharmaChat() {
   const t = I18N[lang];
   const isRTL = lang === "he";
 
-  /* ---------------- RESET CHAT ---------------- */
+  /* ---------------- RESET CHAT ON USER CHANGE ---------------- */
   useEffect(() => {
     if (!activeUser) return;
 
@@ -95,26 +99,26 @@ export default function PharmaChat() {
     refreshSidebar();
   }, [activeUser, lang]);
 
-  /* ---------------- AUTO SCROLL ---------------- */
+  /* ---------------- SAFE AUTO SCROLL ---------------- */
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const el = messagesEndRef.current?.parentElement;
+    if (!el) return;
+
+    if (el.scrollHeight - el.scrollTop - el.clientHeight < 150) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, loading]);
 
-  /* ---------------- REFRESH SIDEBAR ---------------- */
+  /* ---------------- SIDEBAR DATA ---------------- */
   const refreshSidebar = async () => {
     if (!activeUser) return;
-
     try {
-      const [presRes, supportRes] = await Promise.all([
+      const [pres, sup] = await Promise.all([
         fetch(`${apiBase}/prescription-requests/${activeUser.id}`),
         fetch(`${apiBase}/support-requests/${activeUser.id}`),
       ]);
-
-      const presData = await presRes.json();
-      const supportData = await supportRes.json();
-
-      setPrescriptionRequests(Array.isArray(presData) ? presData : []);
-      setSupportRequests(Array.isArray(supportData) ? supportData : []);
+      setPrescriptionRequests(await pres.json());
+      setSupportRequests(await sup.json());
     } catch {
       setPrescriptionRequests([]);
       setSupportRequests([]);
@@ -140,7 +144,6 @@ export default function PharmaChat() {
           message: text,
           session_id: sessionIdRef.current,
           user_id: activeUser.id,
-          user_role: activeUser.role,
           preferred_lang: activeUser.lang,
         }),
       });
@@ -170,49 +173,64 @@ export default function PharmaChat() {
     }
   };
 
-  if (!activeUser) return <div style={{ padding: 20 }}>Loading…</div>;
+  if (!activeUser) return <div>Loading…</div>;
 
   /* ---------------- RENDER ---------------- */
   return (
     <div
       style={{
         height: "100vh",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         direction: isRTL ? "rtl" : "ltr",
-        background: "linear-gradient(135deg,#f0f9ff,#e0e7ff)",
         fontFamily: "system-ui",
       }}
     >
       {/* HEADER */}
-      <div style={{ background: "white", padding: "1.5rem", textAlign: "center" }}>
+      <div style={{ background: "white", padding: "1.5rem", textAlign: "center", position: "relative" }}>
         <select
           value={activeUser.id}
-          onChange={(e) => setActiveUser(users.find((u) => u.id === e.target.value))}
-          style={{ position: "absolute", left: "1rem", top: "1rem" }}
+          onChange={(e) =>
+            setActiveUser(users.find((u) => u.id === e.target.value))
+          }
+          style={{
+            position: "absolute",
+            top: "1rem",
+            left: isRTL ? "auto" : "1rem",
+            right: isRTL ? "1rem" : "auto",
+            padding: "0.4rem 0.6rem",
+            borderRadius: "0.5rem",
+            border: "1px solid #e5e7eb",
+            background: "white",
+            fontSize: "0.85rem",
+          }}
         >
           {users.map((u) => (
             <option key={u.id} value={u.id}>
-              {u.full_name} ({u.role})
+              {u.full_name} {u.role ? `(${u.role})` : ""}
             </option>
           ))}
         </select>
 
         <h1 style={{ fontSize: "2rem", fontWeight: 700 }}>
-          <span style={{ color: "#111827" }}>My </span>
-          <span style={{ color: "#6d28d9", fontStyle: "italic", fontWeight: 800 }}>
-            Wonderful
-          </span>
-          <span style={{ color: "#111827" }}> Pharmacy Assistant</span>
+          Your <span style={{ color: "#6d28d9", fontStyle: "italic" }}>Wonderful</span>{" "}
+          Pharmacy Assistant
         </h1>
-
         <p style={{ color: "#6b7280" }}>{t.subtitle}</p>
       </div>
 
       {/* BODY */}
-      <div style={{ flex: 1, display: "flex" }}>
+      <div style={{ flex: 1, display: "flex", minHeight: 0 }}>
         {/* CHAT */}
-        <div style={{ flex: 1, padding: "1.5rem", overflowY: "auto" }}>
+        <div
+          style={{
+            flex: 1,
+            padding: "1.5rem",
+            overflowY: "auto",
+            background: "linear-gradient(135deg,#f0f9ff,#e0e7ff)",
+          }}
+        >
           {messages.map((m, i) => (
             <div key={i} style={{ marginBottom: "1rem", textAlign: m.role === "user" ? "right" : "left" }}>
               <div
@@ -229,62 +247,141 @@ export default function PharmaChat() {
               </div>
             </div>
           ))}
-          {loading && <AssistantTyping />}
+
+          {loading && (
+            <div style={{ marginBottom: "1rem", textAlign: "left" }}>
+              <div
+                style={{
+                  display: "inline-block",
+                  padding: "0.75rem 1rem",
+                  borderRadius: "0.75rem",
+                  background: "white",
+                }}
+              >
+                <AssistantTyping />
+              </div>
+            </div>
+          )}
+
           <div ref={messagesEndRef} />
         </div>
 
         {/* SIDEBAR */}
-        <div style={{ width: 280, background: "#f9fafb", padding: "1rem" }}>
+        <div style={{ width: 280, padding: "1rem", overflowY: "auto", background: "#f9fafb" }}>
           {/* Prescription */}
-          <h3 onClick={() => setShowRequests(!showRequests)} style={{ cursor: "pointer" }}>
-            {t.requestsTitle} {showRequests ? "▾" : "▸"}
+          <h3
+            onClick={() => setShowRequests(!showRequests)}
+            style={{ cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+          >
+            <span>{t.requestsTitle}</span>
+            <span>{showRequests ? "▾" : "▸"}</span>
           </h3>
+
           {showRequests &&
-            (prescriptionRequests.length === 0
-              ? <div style={{ color: "#6b7280" }}>{t.noRequests}</div>
-              : prescriptionRequests.map((r) => (
-                  <div key={r.id} style={{ background: "white", borderRadius: "0.75rem", padding: "0.75rem", marginBottom: "0.75rem", fontSize: "0.8rem" }}>
-                    <strong>Request #{r.id.slice(0, 8)}</strong>
-                    <div>Status: {r.status}</div>
-                    <div>{new Date(r.created_at).toLocaleString()}</div>
+            prescriptionRequests.map((r) => (
+              <div
+                key={r.id}
+                style={{
+                  background: "white",
+                  padding: "0.75rem",
+                  borderRadius: "0.5rem",
+                  marginBottom: "0.5rem",
+                  fontSize: "0.8rem",
+                }}
+              >
+                <strong>Request #{r.id.slice(0, 8)}</strong>
+                <div>Status: {r.status}</div>
+                {r.medication_name && <div>Medication: {r.medication_name}</div>}
+                {r.created_at && (
+                  <div style={{ color: "#6b7280" }}>
+                    {new Date(r.created_at).toLocaleString()}
                   </div>
-                ))
-            )}
+                )}
+              </div>
+            ))}
 
           {/* Support */}
-          <h3 onClick={() => setShowSupport(!showSupport)} style={{ cursor: "pointer", marginTop: "1rem" }}>
-            {t.supportTitle} {showSupport ? "▾" : "▸"}
+          <h3
+            onClick={() => setShowSupport(!showSupport)}
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "1rem",
+            }}
+          >
+            <span>{t.supportTitle}</span>
+            <span>{showSupport ? "▾" : "▸"}</span>
           </h3>
+
           {showSupport &&
-            (supportRequests.length === 0
-              ? <div style={{ color: "#6b7280" }}>{t.noRequests}</div>
-              : supportRequests.map((s) => (
-                  <div key={s.id} style={{ background: "white", borderRadius: "0.75rem", padding: "0.75rem", marginBottom: "0.75rem", fontSize: "0.8rem" }}>
-                    <strong>Support #{s.id.slice(0, 8)}</strong>
-                    <div>Status: {s.status}</div>
-                    <div>{new Date(s.created_at).toLocaleString()}</div>
+            supportRequests.map((s) => (
+              <div
+                key={s.id}
+                style={{
+                  background: "white",
+                  padding: "0.75rem",
+                  borderRadius: "0.5rem",
+                  marginBottom: "0.5rem",
+                  fontSize: "0.8rem",
+                }}
+              >
+                <strong>Support #{s.id.slice(0, 8)}</strong>
+                <div>Status: {s.status}</div>
+                {s.subject && <div>Topic: {s.subject}</div>}
+                {s.created_at && (
+                  <div style={{ color: "#6b7280" }}>
+                    {new Date(s.created_at).toLocaleString()}
                   </div>
-                ))
-            )}
+                )}
+              </div>
+            ))}
         </div>
       </div>
 
       {/* INPUT */}
-      <div style={{ background: "white", padding: "1rem" }}>
-        <div style={{ maxWidth: "64rem", margin: "0 auto", display: "flex", gap: "1rem" }}>
+      <div style={{ padding: "1rem", background: "white" }}>
+        <div style={{ display: "flex", gap: "1rem" }}>
           <textarea
-            rows={5}
+            rows={3}
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                send();
+              }
+            }}
             placeholder={t.placeholder}
-            style={{ flex: 1, padding: "1rem", borderRadius: "0.75rem" }}
+            style={{
+              flex: 1,
+              padding: "1rem",
+              borderRadius: "0.75rem",
+              resize: "none",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif",
+              fontSize: "15px",
+              lineHeight: 1.5,
+              border: "1px solid #e5e7eb",
+            }}
           />
+
           <button
             onClick={send}
-            disabled={loading || !input.trim()}
-            style={{ background: "#4f46e5", color: "white", borderRadius: "0.75rem", padding: "0.75rem 1rem" }}
+            onMouseEnter={() => setHoverSend(true)}
+            onMouseLeave={() => setHoverSend(false)}
+            disabled={!input.trim() || loading}
+            style={{
+              background: hoverSend ? "#4338ca" : "#4f46e5",
+              color: "white",
+              borderRadius: "0.75rem",
+              padding: "0.75rem 1rem",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+            }}
           >
-            <Send size={20} />
+            <Send />
           </button>
         </div>
       </div>
