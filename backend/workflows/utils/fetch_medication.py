@@ -40,10 +40,8 @@ def get_medication_by_name(query: str):
                 "rx_required": bool(row["rx_required"]),
                 "form": row["form"],
                 "strength": row["strength"],
-                "label_instructions_en": row["label_instructions_en"],
-                "label_instructions_he": row["label_instructions_he"],
-                "warnings_en": row["warnings_en"],
-                "warnings_he": row["warnings_he"],
+                "label_instructions_en": row["label_instructions"],
+                "warnings_en": row["warnings"]
             }
 
     return None

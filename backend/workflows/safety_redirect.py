@@ -1,4 +1,4 @@
-def handle(user_message: str):
+def handle(user_message: str, user_id: str | None = None):
     return {
         "context": """
 I can provide general factual information about medications,

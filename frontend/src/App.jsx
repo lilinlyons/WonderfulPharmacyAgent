@@ -1,328 +1,293 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Send } from 'lucide-react';
+import React, { useEffect, useRef, useState } from "react";
+import { Send } from "lucide-react";
 
-export default function PharmaChat() {
-  const sessionIdRef = useRef(
-    crypto.randomUUID()
-  );
-
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content: "Hello! I'm your Wonderful Pharmacy Assistant. How can I help you today? I can answer questions about our products, dosage, side effects, or help you find the right medication for your needs."
-    }
-  ]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
-  const apiBase = "http://localhost:8000";
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const send = async () => {
-  const trimmed = input.trim();
-  if (!trimmed || loading) return;
-
-  // Add user message
-  const userMessage = { role: "user", content: trimmed };
-  setMessages(prev => [...prev, userMessage]);
-  setInput("");
-  setLoading(true);
-
-  let assistantText = "";
-
-  const prevUserMessage = (() => {
-  for (let i = messages.length - 1; i >= 0; i--) {
-    if (messages[i].role === "user") {
-      return messages[i].content;
-    }
-  }
-  return null;
-})();
-
-  try {
-    const res = await fetch(`${apiBase}/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: trimmed,
-        prev_user_message: prevUserMessage,
-        session_id: sessionIdRef.current
-      })
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-
-      const chunk = decoder.decode(value, { stream: true });
-      assistantText += chunk;
-
-      setMessages(prev => {
-        // Check if the last message is from assistant
-        const lastMessage = prev[prev.length - 1];
-        if (lastMessage?.role === 'assistant') {
-          // Update existing assistant message
-          const copy = [...prev];
-          copy[copy.length - 1] = {
-            role: "assistant",
-            content: assistantText
-          };
-          return copy;
-        } else {
-          // Add new assistant message
-          return [...prev, { role: "assistant", content: assistantText }];
-        }
-      });
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    setMessages(prev => {
-      const lastMessage = prev[prev.length - 1];
-      if (lastMessage?.role === 'assistant') {
-        const copy = [...prev];
-        copy[copy.length - 1] = {
-          role: "assistant",
-          content: "Sorry, I encountered an error. Please try again."
-        };
-        return copy;
-      } else {
-        return [...prev, {
-          role: "assistant",
-          content: "Sorry, I encountered an error. Please try again."
-        }];
-      }
-    });
-  } finally {
-    setLoading(false);
-  }
+/* ---------------- I18N ---------------- */
+const I18N = {
+  en: {
+    greeting: (name) => `Hello ${name}! How can I help you today?`,
+    subtitle: "Get answers about medications, dosages, side effects, and more",
+    placeholder: "Ask about medications, dosages, side effects...",
+    error: "Sorry, something went wrong.",
+    requestsTitle: "Prescription Requests",
+    supportTitle: "Support Requests",
+    noRequests: "No requests found",
+  },
+  he: {
+    greeting: (name) => `שלום ${name}! איך אפשר לעזור לך היום?`,
+    subtitle: "מידע על תרופות, מינונים, תופעות לוואי ועוד",
+    placeholder: "שאל על תרופות, מינונים, תופעות לוואי...",
+    error: "אירעה שגיאה, נסה שוב.",
+    requestsTitle: "בקשות מרשם",
+    supportTitle: "פניות תמיכה",
+    noRequests: "לא נמצאו בקשות",
+  },
 };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      send();
+/* ---------------- Assistant Typing ---------------- */
+function AssistantTyping() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+      <img
+        src="/download.jpeg"
+        alt="assistant"
+        style={{
+          width: 42,
+          height: 42,
+          animation: "pulse 1.2s ease-in-out infinite",
+        }}
+      />
+      <span style={{ color: "#6b7280" }}>Assistant is typing…</span>
+
+      <style>
+        {`
+          @keyframes pulse {
+            0%   { transform: scale(0.85); opacity: 0.7; }
+            50%  { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.85); opacity: 0.7; }
+          }
+        `}
+      </style>
+    </div>
+  );
+}
+
+/* ---------------- MAIN COMPONENT ---------------- */
+export default function PharmaChat() {
+  const apiBase = "http://localhost:8000";
+  const sessionIdRef = useRef(crypto.randomUUID());
+  const messagesEndRef = useRef(null);
+
+  const [users, setUsers] = useState([]);
+  const [activeUser, setActiveUser] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [prescriptionRequests, setPrescriptionRequests] = useState([]);
+  const [supportRequests, setSupportRequests] = useState([]);
+
+  const [showRequests, setShowRequests] = useState(true);
+  const [showSupport, setShowSupport] = useState(true);
+
+  /* ---------------- LOAD USERS ---------------- */
+  useEffect(() => {
+    fetch(`${apiBase}/users`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length) {
+          setUsers(data);
+          setActiveUser(data[0]);
+        }
+      });
+  }, []);
+
+  /* ---------------- LANGUAGE ---------------- */
+  const lang = activeUser?.lang === "he" ? "he" : "en";
+  const t = I18N[lang];
+  const isRTL = lang === "he";
+
+  /* ---------------- RESET CHAT ---------------- */
+  useEffect(() => {
+    if (!activeUser) return;
+
+    sessionIdRef.current = crypto.randomUUID();
+    setMessages([{ role: "assistant", content: t.greeting(activeUser.full_name) }]);
+    refreshSidebar();
+  }, [activeUser, lang]);
+
+  /* ---------------- AUTO SCROLL ---------------- */
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
+  /* ---------------- REFRESH SIDEBAR ---------------- */
+  const refreshSidebar = async () => {
+    if (!activeUser) return;
+
+    try {
+      const [presRes, supportRes] = await Promise.all([
+        fetch(`${apiBase}/prescription-requests/${activeUser.id}`),
+        fetch(`${apiBase}/support-requests/${activeUser.id}`),
+      ]);
+
+      const presData = await presRes.json();
+      const supportData = await supportRes.json();
+
+      setPrescriptionRequests(Array.isArray(presData) ? presData : []);
+      setSupportRequests(Array.isArray(supportData) ? supportData : []);
+    } catch {
+      setPrescriptionRequests([]);
+      setSupportRequests([]);
     }
   };
 
-  const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    background: 'linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%)',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  /* ---------------- SEND MESSAGE ---------------- */
+  const send = async () => {
+    if (!activeUser || !input.trim() || loading) return;
+
+    const text = input.trim();
+    setInput("");
+    setLoading(true);
+    setMessages((m) => [...m, { role: "user", content: text }]);
+
+    let assistantText = "";
+
+    try {
+      const res = await fetch(`${apiBase}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: text,
+          session_id: sessionIdRef.current,
+          user_id: activeUser.id,
+          user_role: activeUser.role,
+          preferred_lang: activeUser.lang,
+        }),
+      });
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        assistantText += decoder.decode(value, { stream: true });
+
+        setMessages((prev) => {
+          const last = prev.at(-1);
+          if (last?.role === "assistant") {
+            return [...prev.slice(0, -1), { role: "assistant", content: assistantText }];
+          }
+          return [...prev, { role: "assistant", content: assistantText }];
+        });
+      }
+    } catch {
+      setMessages((m) => [...m, { role: "assistant", content: t.error }]);
+    } finally {
+      setLoading(false);
+      refreshSidebar();
+    }
   };
 
-  const headerStyle = {
-    background: 'white',
-    borderBottom: '1px solid #e5e7eb',
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-    padding: '1.5rem 1rem',
-    textAlign: 'center',
-  };
+  if (!activeUser) return <div style={{ padding: 20 }}>Loading…</div>;
 
-  const titleStyle = {
-    fontSize: '1.875rem',
-    fontWeight: 'bold',
-    color: '#111827',
-    margin: 0,
-  };
-
-  const italicStyle = {
-    fontStyle: 'italic',
-    color: '#4f46e5',
-  };
-
-  const subtitleStyle = {
-    fontSize: '0.875rem',
-    color: '#6b7280',
-    margin: '0.5rem 0 0 0',
-  };
-
-  const messagesContainerStyle = {
-    flex: 1,
-    overflowY: 'auto',
-    padding: '1.5rem 1rem',
-    maxWidth: '48rem',
-    margin: '0 auto',
-    width: '100%',
-  };
-
-  const messageBubbleStyle = (role) => ({
-    display: 'flex',
-    justifyContent: role === 'user' ? 'flex-end' : 'flex-start',
-    marginBottom: '1rem',
-  });
-
-  const bubbleStyle = (role) => ({
-    maxWidth: '70%',
-    padding: '0.75rem 1rem',
-    borderRadius: '0.5rem',
-    wordWrap: 'break-word',
-    whiteSpace: 'pre-wrap',
-    fontSize: '0.95rem',
-    lineHeight: '1.5',
-    ...(role === 'user' ? {
-      background: '#4f46e5',
-      color: 'white',
-      borderBottomRightRadius: '0.125rem',
-      boxShadow: '0 1px 3px rgba(79, 70, 229, 0.3)',
-    } : {
-      background: 'white',
-      color: '#111827',
-      border: '1px solid #e5e7eb',
-      borderBottomLeftRadius: '0.125rem',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-    })
-  });
-
-  const inputContainerStyle = {
-    background: 'white',
-    borderTop: '1px solid #e5e7eb',
-    padding: '1.5rem 1rem',
-    boxShadow: '0 -2px 4px rgba(0, 0, 0, 0.05)',
-  };
-
-  const inputWrapperStyle = {
-    maxWidth: '48rem',
-    margin: '0 auto',
-    display: 'flex',
-    gap: '0.75rem',
-  };
-
-  const textareaStyle = {
-    flex: 1,
-    padding: '0.75rem 1rem',
-    border: '1px solid #d1d5db',
-    borderRadius: '0.5rem',
-    fontSize: '0.95rem',
-    fontFamily: 'inherit',
-    resize: 'none',
-    outline: 'none',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.2s',
-  };
-
-  const buttonStyle = {
-    background: loading || !input.trim() ? '#d1d5db' : '#4f46e5',
-    color: 'white',
-    border: 'none',
-    borderRadius: '0.5rem',
-    padding: '0.75rem 1rem',
-    cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: 'background 0.2s',
-    fontSize: '1rem',
-  };
-
-  const helpTextStyle = {
-    maxWidth: '48rem',
-    margin: '0.5rem auto 0',
-    fontSize: '0.75rem',
-    color: '#6b7280',
-  };
-
+  /* ---------------- RENDER ---------------- */
   return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        <h1 style={titleStyle}>
-          Your <span style={italicStyle}>Wonderful</span> Pharmacy Assistant
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        direction: isRTL ? "rtl" : "ltr",
+        background: "linear-gradient(135deg,#f0f9ff,#e0e7ff)",
+        fontFamily: "system-ui",
+      }}
+    >
+      {/* HEADER */}
+      <div style={{ background: "white", padding: "1.5rem", textAlign: "center" }}>
+        <select
+          value={activeUser.id}
+          onChange={(e) => setActiveUser(users.find((u) => u.id === e.target.value))}
+          style={{ position: "absolute", left: "1rem", top: "1rem" }}
+        >
+          {users.map((u) => (
+            <option key={u.id} value={u.id}>
+              {u.full_name} ({u.role})
+            </option>
+          ))}
+        </select>
+
+        <h1 style={{ fontSize: "2rem", fontWeight: 700 }}>
+          <span style={{ color: "#111827" }}>My </span>
+          <span style={{ color: "#6d28d9", fontStyle: "italic", fontWeight: 800 }}>
+            Wonderful
+          </span>
+          <span style={{ color: "#111827" }}> Pharmacy Assistant</span>
         </h1>
-        <p style={subtitleStyle}>
-          Get answers about medications, dosages, side effects, and more
-        </p>
+
+        <p style={{ color: "#6b7280" }}>{t.subtitle}</p>
       </div>
 
-      <div style={messagesContainerStyle}>
-        {messages.map((message, idx) => (
-          <div key={idx} style={messageBubbleStyle(message.role)}>
-            <div style={bubbleStyle(message.role)}>
-              {message.content}
-            </div>
-          </div>
-        ))}
-        {loading && (
-          <div style={messageBubbleStyle('assistant')}>
-            <div style={bubbleStyle('assistant')}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <img
-                  src="/download.jpeg"
-                  alt="Loading..."
-                  style={{
-                    width: '20px',
-                    height: '20px',
-                    animation: 'pulse 1.5s ease-in-out infinite',
-                  }}
-                />
-                <span>Assistant is typing...</span>
+      {/* BODY */}
+      <div style={{ flex: 1, display: "flex" }}>
+        {/* CHAT */}
+        <div style={{ flex: 1, padding: "1.5rem", overflowY: "auto" }}>
+          {messages.map((m, i) => (
+            <div key={i} style={{ marginBottom: "1rem", textAlign: m.role === "user" ? "right" : "left" }}>
+              <div
+                style={{
+                  display: "inline-block",
+                  maxWidth: "75%",
+                  padding: "0.75rem 1rem",
+                  borderRadius: "0.75rem",
+                  background: m.role === "user" ? "#4f46e5" : "white",
+                  color: m.role === "user" ? "white" : "#111827",
+                }}
+              >
+                {m.content}
               </div>
             </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
+          ))}
+          {loading && <AssistantTyping />}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* SIDEBAR */}
+        <div style={{ width: 280, background: "#f9fafb", padding: "1rem" }}>
+          {/* Prescription */}
+          <h3 onClick={() => setShowRequests(!showRequests)} style={{ cursor: "pointer" }}>
+            {t.requestsTitle} {showRequests ? "▾" : "▸"}
+          </h3>
+          {showRequests &&
+            (prescriptionRequests.length === 0
+              ? <div style={{ color: "#6b7280" }}>{t.noRequests}</div>
+              : prescriptionRequests.map((r) => (
+                  <div key={r.id} style={{ background: "white", borderRadius: "0.75rem", padding: "0.75rem", marginBottom: "0.75rem", fontSize: "0.8rem" }}>
+                    <strong>Request #{r.id.slice(0, 8)}</strong>
+                    <div>Status: {r.status}</div>
+                    <div>{new Date(r.created_at).toLocaleString()}</div>
+                  </div>
+                ))
+            )}
+
+          {/* Support */}
+          <h3 onClick={() => setShowSupport(!showSupport)} style={{ cursor: "pointer", marginTop: "1rem" }}>
+            {t.supportTitle} {showSupport ? "▾" : "▸"}
+          </h3>
+          {showSupport &&
+            (supportRequests.length === 0
+              ? <div style={{ color: "#6b7280" }}>{t.noRequests}</div>
+              : supportRequests.map((s) => (
+                  <div key={s.id} style={{ background: "white", borderRadius: "0.75rem", padding: "0.75rem", marginBottom: "0.75rem", fontSize: "0.8rem" }}>
+                    <strong>Support #{s.id.slice(0, 8)}</strong>
+                    <div>Status: {s.status}</div>
+                    <div>{new Date(s.created_at).toLocaleString()}</div>
+                  </div>
+                ))
+            )}
+        </div>
       </div>
 
-      <div style={inputContainerStyle}>
-        <div style={inputWrapperStyle}>
+      {/* INPUT */}
+      <div style={{ background: "white", padding: "1rem" }}>
+        <div style={{ maxWidth: "64rem", margin: "0 auto", display: "flex", gap: "1rem" }}>
           <textarea
+            rows={5}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask about medications, dosages, side effects, insurance coverage..."
-            style={textareaStyle}
-            rows="3"
-            disabled={loading}
+            placeholder={t.placeholder}
+            style={{ flex: 1, padding: "1rem", borderRadius: "0.75rem" }}
           />
           <button
             onClick={send}
             disabled={loading || !input.trim()}
-            style={buttonStyle}
-            title="Send message"
+            style={{ background: "#4f46e5", color: "white", borderRadius: "0.75rem", padding: "0.75rem 1rem" }}
           >
             <Send size={20} />
           </button>
         </div>
-        <div style={helpTextStyle}>
-          Press Shift+Enter for new line, Enter to send
-        </div>
       </div>
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.2);
-            opacity: 0.7;
-          }
-        }
-        
-        textarea:focus {
-          border-color: #4f46e5;
-          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-        
-        button:hover:not(:disabled) {
-          background: #4338ca !important;
-        }
-      `}</style>
     </div>
   );
 }

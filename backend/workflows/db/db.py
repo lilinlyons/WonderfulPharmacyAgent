@@ -17,23 +17,46 @@ def init_schema():
       id TEXT PRIMARY KEY,
       full_name TEXT,
       phone TEXT,
-      preferred_lang TEXT
+      preferred_lang TEXT,
+      role TEXT
     )""")
 
     cur.execute("""
-    CREATE TABLE IF NOT EXISTS medications (
+        CREATE TABLE IF NOT EXISTS medications (
+          id TEXT PRIMARY KEY,
+          brand_name TEXT,
+          generic_name TEXT,
+          active_ingredient TEXT,
+          rx_required INTEGER,
+          form TEXT,
+          strength TEXT,
+          label_instructions TEXT,
+          warnings TEXT
+        )
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS support_requests (
       id TEXT PRIMARY KEY,
-      brand_name TEXT,
-      generic_name TEXT,
-      active_ingredient TEXT,
-      rx_required INTEGER,
-      form TEXT,
-      strength TEXT,
-      label_instructions_en TEXT,
-      label_instructions_he TEXT,
-      warnings_en TEXT,
-      warnings_he TEXT
-    )""")
+      user_id TEXT,
+      subject TEXT,
+      message TEXT,
+      status TEXT,  
+      created_at TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS prescription_requests (
+      id TEXT PRIMARY KEY,
+      user_id TEXT,
+      medication_id TEXT,
+      request_type TEXT,    
+      status TEXT,         
+      notes TEXT,
+      created_at TEXT
+    )
+    """)
 
     cur.execute("""
     CREATE TABLE IF NOT EXISTS stock (
@@ -48,20 +71,11 @@ def init_schema():
       id TEXT PRIMARY KEY,
       user_id TEXT,
       medication_id TEXT,
-      status TEXT,           -- active/expired
+      status TEXT,      
       refills_left INTEGER,
       expires_on TEXT
     )""")
 
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS tickets (
-      id TEXT PRIMARY KEY,
-      user_id TEXT,
-      topic TEXT,
-      details TEXT,
-      status TEXT,
-      created_at TEXT
-    )""")
 
     c.commit()
     c.close()

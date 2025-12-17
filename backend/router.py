@@ -7,8 +7,10 @@ from workflows import (
     medication_dosage,
     medication_info,
     prescription_requirements,
+    refill_request,
     stock_check,
     safety_redirect,
+    support_request
 )
 
 logger = logging.getLogger("pharmacy-agent")
@@ -55,9 +57,13 @@ def route(intent: Intent):
             logger.debug("Intent mapped to medication_dosage")
             return medication_dosage.handle
 
-        # Intent.SUPPORT
-        # Intent.REFILL_REQUEST
-        # → not implemented yet
+        if intent == Intent.SUPPORT:
+            logger.debug("Intent mapped to support")
+            return support_request.handle
+
+        if intent == Intent.REFILL_REQUEST:
+            logger.debug("Intent mapped to refill_request")
+            return refill_request.handle
 
         logger.info("No explicit route for intent %s, using fallback", intent)
         return fallback.handle

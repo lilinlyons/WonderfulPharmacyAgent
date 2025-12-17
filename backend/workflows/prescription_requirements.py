@@ -5,7 +5,7 @@ from utils.workflow_logger import get_workflow_logger
 logger = get_workflow_logger()
 
 
-def handle(message: str):
+def handle(message: str, user_id: str | None = None):
     logger.info("Workflow started")
     logger.info("Input message: %s", message)
 

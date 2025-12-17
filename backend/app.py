@@ -4,7 +4,8 @@ from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from openai import OpenAI
 from dotenv import load_dotenv
-
+from utils.get_prescriptions_per_user import get_prescription_per_user
+from workflows.utils.fetch_users import fetch_users
 from bert.labels import Intent
 from utils.policy_prompt import SYSTEM_PROMPT
 from bert.classifier import classify_intent
@@ -43,6 +44,8 @@ async def chat(req: Request):
     user_message = body.get("message", "").strip()
 
     session_id = body.get("session_id", "anonymous")
+    user_id = body.get("user_id")
+
     prev_message = get_prev_message(session_id)
 
     logger = get_session_logger(session_id)
@@ -69,7 +72,7 @@ async def chat(req: Request):
         except Exception:
             logger.exception("Rephrasing failed")
 
-    # ✅ ALWAYS store the final message for the NEXT request
+    # ALWAYS store the final message for the NEXT request
     set_prev_message(session_id, user_message)
 
     # Intent classification
@@ -91,7 +94,12 @@ async def chat(req: Request):
     else:
         try:
             handler = route(intent)
-            workflow_result = handler(user_message)
+
+            workflow_result = handler(
+                user_message,
+                user_id=user_id,
+            )
+
             system_context = workflow_result.get("context", "")
             user_prompt = user_message
             logger.info("Workflow executed successfully")
@@ -126,6 +134,31 @@ async def chat(req: Request):
 
     return StreamingResponse(event_stream(), media_type="text/plain")
 
+@app.get("/users")
+def get_users():
+    """
+    Return all users for the frontend user selector
+    """
+    try:
+        users = fetch_users()
+
+        # Adapt fields for frontend expectations
+        return [
+            {
+                "id": user["id"],
+                "full_name": user["full_name"],
+                "role": user["role"],
+                "lang": user["preferred_lang"],
+            }
+            for user in users
+        ]
+
+    except Exception:
+        return []
+
+@app.get("/prescription-requests/{user_id}")
+def get_prescription_requests(user_id: str):
+    return get_prescription_per_user(user_id)
 
 @app.get("/health")
 def health():
