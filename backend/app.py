@@ -14,10 +14,11 @@ from utils.get_prescriptions_per_user import get_prescription_per_user
 from utils.get_support_per_user import get_support_per_user
 from utils.get_all_prescription_requests import get_all_prescription_requests
 from utils.get_all_support_requests import get_all_support_requests
+from utils.get_medications_sold import get_medications_sold
 from utils.update_prescription_request_status import update_prescription_request_status
 from utils.update_support_request_status import update_support_request_status
 from utils.get_user_by_id import get_user_by_id
-from workflows.utils.fetch_users import fetch_users
+from utils.fetch_users import fetch_users
 from bert.labels import Intent
 from utils.policy_prompt import SYSTEM_PROMPT
 from utils.logging_utils.session_logger import get_session_logger
@@ -29,7 +30,12 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://0.0.0.0:5173",
+        "*"  # For development only
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,14 +55,13 @@ async def chat(req: Request):
         )
 
     user_message = body.get("message", "").strip()
-
     session_id = body.get("session_id", "anonymous")
     user_id = body.get("user_id")
+    user = get_user_by_id(user_id)
 
+    # logger setup
     logger = get_session_logger(session_id, user_id)
     logger.info("New request received")
-
-    user = get_user_by_id(user_id)
 
     if not user:
         return {"error": "Invalid user"}
@@ -79,17 +84,24 @@ async def chat(req: Request):
         )
 
     logger.info("User message: %s", user_message)
-    print(ContextAgent(client, logger).process(session_id, user_message, user_id))
 
-    user_message = ContextAgent(client, logger).process(session_id, user_message, user_id)
-    print("user message:",user_message)
+    # 1st agent
+    try:
+        user_message = ContextAgent(client, logger).process(session_id, user_message, user_id)
+    except Exception:
+        logger.exception("Context classification failed")
+    #     Not crucial so can continue even if it fails
 
+
+    # 2nd agent
     try:
         intent = IntentAgent(logger).process(user_message, user_id)
     except Exception:
         logger.exception("Intent classification failed")
+        # fallback
         intent = Intent.UNKNOWN
 
+    # fallback for unknown intent
     if intent == Intent.UNKNOWN:
         system_context = ""
         user_prompt = (
@@ -99,9 +111,8 @@ async def chat(req: Request):
         logger.info("Handled UNKNOWN intent")
     else:
         try:
+            # 3rd agent
             user_prompt, system_context = ExecutionAgent(logger, intent).execute(user_message, user_id)
-            print("user prompt:", user_prompt)
-            print("system_cotext", system_context)
             logger.info("Workflow executed successfully")
         except Exception:
             logger.exception("Workflow failed")
@@ -179,7 +190,7 @@ async def update_prescription(
     req: Request
 ):
     body = await req.json()
-    allowed_statuses = {"pending", "in_progress", "completed"}
+    allowed_statuses = {"Pending", "In Progress", "Completed"}
 
     status = body.get("status")
 
@@ -203,7 +214,7 @@ async def update_support(
         req: Request
 ):
     body = await req.json()
-    allowed_statuses = {"pending", "in_progress", "completed"}
+    allowed_statuses = {"Pending", "In Progress", "Completed"}
 
     status = body.get("status")
 
@@ -221,6 +232,15 @@ async def update_support(
         "status": status,
     }
 
+@app.get("/pharmacist-dashboard")
+def pharmacist_dashboard():
+    print("hello")
+    print(get_medications_sold())
+    return {
+        "prescriptions": get_all_prescription_requests(),
+        "support_requests": get_all_support_requests(),
+        "medications_sold": get_medications_sold(),
+    }
 
 @app.get("/health")
 def health():

@@ -1,4 +1,4 @@
-from workflows.db.db import conn
+from utils.db.db import conn
 from fastapi import HTTPException
 
 def update_prescription_request_status(prescription_id: str, status: str):

@@ -1,4 +1,4 @@
-from workflows.db.db import conn
+from utils.db.db import conn
 
 
 def get_user_by_id(user_id: str) -> dict | None:

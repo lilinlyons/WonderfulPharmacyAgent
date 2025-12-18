@@ -1,4 +1,4 @@
-from workflows.db.db import conn
+from utils.db.db import conn
 
 def get_support_per_user(user_id: str):
     try:

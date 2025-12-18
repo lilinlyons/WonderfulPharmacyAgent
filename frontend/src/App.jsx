@@ -96,30 +96,23 @@ export default function PharmaChat() {
 useEffect(() => {
   if (!activeUser) return;
 
-  sessionIdRef.current = crypto.randomUUID();
-  setMessages([]);
-  setDashboardData(null);
-
   if (activeUser.role === "pharmacist") {
-    fetch(`${apiBase}/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: "",
-        session_id: sessionIdRef.current,
-        user_id: activeUser.id,
-        preferred_lang: activeUser.lang,
-      }),
-    })
+    setDashboardData(null); // loading state
+
+    fetch(`${apiBase}/pharmacist-dashboard`)
       .then((r) => r.json())
       .then((data) => setDashboardData(data))
       .catch(() => setDashboardData({ error: true }));
-  } else {
-    setMessages([{ role: "assistant", content: t.greeting(activeUser.full_name) }]);
-    refreshSidebar();
-  }
-}, [activeUser, lang]);
 
+    return;
+  }
+
+  sessionIdRef.current = crypto.randomUUID();
+  setMessages([
+    { role: "assistant", content: t.greeting(activeUser.full_name) },
+  ]);
+  refreshSidebar();
+}, [activeUser, lang]);
 
   /* ---------------- SAFE AUTO SCROLL ---------------- */
   useEffect(() => {

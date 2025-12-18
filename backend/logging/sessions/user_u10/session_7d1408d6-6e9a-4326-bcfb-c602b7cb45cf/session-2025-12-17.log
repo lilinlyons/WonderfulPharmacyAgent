@@ -1,0 +1,9 @@
+2025-12-17 22:38:53,476 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: New request received
+2025-12-17 22:38:53,477 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: User message: i need help with my order please can i have customer support
+2025-12-17 22:38:53,477 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: Prev message: None
+2025-12-17 22:38:53,477 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: Prev message: i need help with my order please can i have customer support
+2025-12-17 22:38:53,477 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: Rephrasing with previous context
+2025-12-17 22:39:01,662 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: Rephrased message: i need help with my order please can i have customer support
+2025-12-17 22:39:02,291 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: Intent: Intent.SUPPORT
+2025-12-17 22:39:02,291 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: Routing intent: Intent.SUPPORT
+2025-12-17 22:39:02,294 [INFO] pharmacy-session.u10.7d1408d6-6e9a-4326-bcfb-c602b7cb45cf: Workflow executed successfully

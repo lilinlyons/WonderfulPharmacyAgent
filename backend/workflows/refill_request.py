@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from workflows.db.db import conn
+from utils.db.db import conn
 from utils.logging_utils.workflow_logger import get_workflow_logger
 
 def handle(message: str, user_id: str | None = None):

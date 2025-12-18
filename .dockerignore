@@ -1,7 +1,8 @@
-node_modules
-npm-debug.log
-venv
-backend/__pycache__
-.git
-.DS_Store
-.idea
+backend/bert/model_out/
+**/*.pt
+**/*.bin
+**/*.safetensors
+**/checkpoint-*
+**/.cache
+**/node_modules
+**/__pycache__

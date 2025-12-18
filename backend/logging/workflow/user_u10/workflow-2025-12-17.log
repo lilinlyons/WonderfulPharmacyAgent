@@ -1,0 +1,16 @@
+2025-12-17 21:00:53,322 [INFO] pharmacy-workflow.u10: Workflow started
+2025-12-17 21:00:53,322 [INFO] pharmacy-workflow.u10: Input message: What are the active and inactive ingredients in the exact Nurofen product you mean (please specify the product variant, strength, dosage form, and your country)?
+2025-12-17 21:00:53,322 [INFO] pharmacy-workflow.u10: Medication found: name=Nurofen active_ingredient=Ibuprofen
+2025-12-17 21:02:24,250 [INFO] pharmacy-workflow.u10: Workflow started
+2025-12-17 21:02:24,250 [INFO] pharmacy-workflow.u10: Input message: What are the ingredients (active and inactive) in Nurofen?
+2025-12-17 21:02:24,251 [INFO] pharmacy-workflow.u10: Medication found: name=Nurofen active_ingredient=Ibuprofen
+2025-12-17 21:04:45,335 [INFO] pharmacy-workflow.u10: Workflow started
+2025-12-17 21:04:45,335 [INFO] pharmacy-workflow.u10: Input message: What are the ingredients in the specific Nurofen product you’re referring to (which formulation, strength, and country)?
+2025-12-17 21:04:45,336 [INFO] pharmacy-workflow.u10: Medication found: name=Nurofen active_ingredient=Ibuprofen
+2025-12-17 21:05:53,730 [INFO] pharmacy-workflow.u10: Workflow started
+2025-12-17 21:05:53,730 [INFO] pharmacy-workflow.u10: Input message: What are the ingredients in Nurofen?
+2025-12-17 21:05:53,731 [INFO] pharmacy-workflow.u10: Medication found: name=Nurofen active_ingredient=Ibuprofen
+2025-12-17 22:39:02,291 [INFO] pharmacy-workflow.u10: Support request workflow started
+2025-12-17 22:39:02,293 [INFO] pharmacy-workflow.u10: Support request created: b8034015-9132-4589-9b58-fe28df3662ad
+2025-12-17 23:14:44,476 [INFO] pharmacy-workflow.u10: Refill request workflow started
+2025-12-17 23:14:44,478 [INFO] pharmacy-workflow.u10: Refill request created and refill deducted: acda966a-e48c-48eb-8e3c-4a8f852a606a

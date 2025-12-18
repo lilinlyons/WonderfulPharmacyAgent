@@ -1,0 +1,94 @@
+2025-12-17 21:06:56,202 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:06:56,202 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: please can i have a prescription refill
+2025-12-17 21:06:56,202 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: None
+2025-12-17 21:06:56,202 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: please can i have a prescription refill
+2025-12-17 21:06:56,203 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:07:25,586 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Please can I have a refill for [medication name]?
+2025-12-17 21:07:25,964 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.REFILL_REQUEST
+2025-12-17 21:07:25,965 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.REFILL_REQUEST
+2025-12-17 21:07:25,970 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully
+2025-12-17 21:09:06,272 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:09:06,275 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: what are the side effects of Augmentin
+2025-12-17 21:09:06,276 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Please can I have a refill for [medication name]?
+2025-12-17 21:09:06,276 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:09:17,787 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: what are the side effects of Augmentin
+2025-12-17 21:09:17,788 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: what are the side effects of Augmentin
+2025-12-17 21:09:17,788 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:09:20,551 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: what are the side effects of Augmentin
+2025-12-17 21:09:20,972 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.SIDE_EFFECTS_CONCERN
+2025-12-17 21:09:20,973 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.SIDE_EFFECTS_CONCERN
+2025-12-17 21:09:20,973 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully
+2025-12-17 21:10:00,791 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:10:00,792 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: can i have some medical advice please
+2025-12-17 21:10:00,792 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: what are the side effects of Augmentin
+2025-12-17 21:10:00,792 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:10:07,880 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can I have some medical advice about the side effects of Augmentin?
+2025-12-17 21:10:07,881 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Can I have some medical advice about the side effects of Augmentin?
+2025-12-17 21:10:07,881 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:10:12,374 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can I have some medical advice about the side effects of Augmentin?
+2025-12-17 21:10:12,470 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.SIDE_EFFECTS_CONCERN
+2025-12-17 21:10:12,471 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.SIDE_EFFECTS_CONCERN
+2025-12-17 21:10:12,471 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully
+2025-12-17 21:10:52,652 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:10:52,652 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: what is the capital of spain
+2025-12-17 21:10:52,652 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: None
+2025-12-17 21:10:52,653 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: what is the capital of spain
+2025-12-17 21:10:52,653 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:10:56,594 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: what is the capital of spain
+2025-12-17 21:10:56,929 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.UNKNOWN
+2025-12-17 21:10:56,929 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Handled UNKNOWN intent
+2025-12-17 21:11:18,215 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:11:18,216 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: can i have a prescription for Augmentin
+2025-12-17 21:11:18,217 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: what is the capital of spain
+2025-12-17 21:11:18,217 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:11:30,901 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: can i have a prescription for Augmentin
+2025-12-17 21:11:30,902 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: can i have a prescription for Augmentin
+2025-12-17 21:11:30,902 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:11:39,841 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can you write me a prescription for Augmentin?
+2025-12-17 21:11:40,139 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.PRESCRIPTION_REQUIREMENT
+2025-12-17 21:11:40,140 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.PRESCRIPTION_REQUIREMENT
+2025-12-17 21:11:40,142 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully
+2025-12-17 21:13:16,125 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:13:16,126 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: can i renew my prescription
+2025-12-17 21:13:16,127 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Can you write me a prescription for Augmentin?
+2025-12-17 21:13:16,127 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:13:20,882 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can I renew my Augmentin prescription?
+2025-12-17 21:13:20,882 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Can I renew my Augmentin prescription?
+2025-12-17 21:13:20,883 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:13:23,023 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can I renew my Augmentin prescription?
+2025-12-17 21:13:23,363 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.REFILL_REQUEST
+2025-12-17 21:13:23,363 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.REFILL_REQUEST
+2025-12-17 21:13:23,366 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully
+2025-12-17 21:14:31,262 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:14:31,264 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: do i have any prescription refills left
+2025-12-17 21:14:31,264 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Can I renew my Augmentin prescription?
+2025-12-17 21:14:31,264 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:14:33,975 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Do I have any refills left on my Augmentin prescription?
+2025-12-17 21:14:33,978 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Do I have any refills left on my Augmentin prescription?
+2025-12-17 21:14:33,978 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:14:38,695 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Do I have any refills left on my Augmentin prescription?
+2025-12-17 21:14:38,890 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.REFILL_REQUEST
+2025-12-17 21:14:38,891 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.REFILL_REQUEST
+2025-12-17 21:14:38,891 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully
+2025-12-17 21:15:21,710 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:15:21,711 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: yes send me a subscription renewall to my doctor please
+2025-12-17 21:15:21,711 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Do I have any refills left on my Augmentin prescription?
+2025-12-17 21:15:21,711 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:15:27,777 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can you send a prescription renewal request for my Augmentin to my doctor?
+2025-12-17 21:15:27,777 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Can you send a prescription renewal request for my Augmentin to my doctor?
+2025-12-17 21:15:27,778 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:15:36,200 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can you send a prescription renewal request for my Augmentin to my doctor?
+2025-12-17 21:15:36,289 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.REFILL_REQUEST
+2025-12-17 21:15:36,289 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.REFILL_REQUEST
+2025-12-17 21:15:36,291 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully
+2025-12-17 21:16:31,700 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: New request received
+2025-12-17 21:16:31,701 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: User message: Maya katz, augmentin..
+2025-12-17 21:16:31,701 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Can you send a prescription renewal request for my Augmentin to my doctor?
+2025-12-17 21:16:31,701 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:16:36,203 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can you send a prescription renewal request for my Augmentin to Dr. Maya Katz?
+2025-12-17 21:16:36,204 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Prev message: Can you send a prescription renewal request for my Augmentin to Dr. Maya Katz?
+2025-12-17 21:16:36,204 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrasing with previous context
+2025-12-17 21:16:41,086 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Rephrased message: Can you send a prescription renewal request for my Augmentin to Dr. Maya Katz?
+2025-12-17 21:16:41,174 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Intent: Intent.REFILL_REQUEST
+2025-12-17 21:16:41,174 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Routing intent: Intent.REFILL_REQUEST
+2025-12-17 21:16:41,175 [INFO] pharmacy-session.u4.228cf351-e5ac-40e3-b897-3d8a7cc4107e: Workflow executed successfully

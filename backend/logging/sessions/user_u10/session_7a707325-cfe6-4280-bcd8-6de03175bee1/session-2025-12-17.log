@@ -1,0 +1,9 @@
+2025-12-17 23:14:26,539 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: New request received
+2025-12-17 23:14:26,539 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: User message: i need a refill
+2025-12-17 23:14:26,539 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: Prev message: None
+2025-12-17 23:14:26,539 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: Prev message: i need a refill
+2025-12-17 23:14:26,539 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: Rephrasing with previous context
+2025-12-17 23:14:43,787 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: Rephrased message: Can you help me get a refill?
+2025-12-17 23:14:44,475 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: Intent: Intent.REFILL_REQUEST
+2025-12-17 23:14:44,476 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: Routing intent: Intent.REFILL_REQUEST
+2025-12-17 23:14:44,478 [INFO] pharmacy-session.u10.7a707325-cfe6-4280-bcd8-6de03175bee1: Workflow executed successfully

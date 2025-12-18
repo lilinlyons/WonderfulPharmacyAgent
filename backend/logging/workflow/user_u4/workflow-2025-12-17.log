@@ -1,0 +1,15 @@
+2025-12-17 21:07:25,966 [INFO] pharmacy-workflow.u4: Refill request workflow started
+2025-12-17 21:07:25,970 [INFO] pharmacy-workflow.u4: Refill request created and refill deducted: 995b5a9f-3bcd-4095-bd7d-97c1b342b2d0
+2025-12-17 21:11:40,140 [INFO] pharmacy-workflow.u4: Workflow started
+2025-12-17 21:11:40,140 [INFO] pharmacy-workflow.u4: Input message: Can you write me a prescription for Augmentin?
+2025-12-17 21:11:40,142 [INFO] pharmacy-workflow.u4: Medication found: name=Augmentin rx_required=True
+2025-12-17 21:13:23,363 [INFO] pharmacy-workflow.u4: Refill request workflow started
+2025-12-17 21:13:23,365 [INFO] pharmacy-workflow.u4: Refill request created and refill deducted: ddc3159f-b33a-4b01-bccd-082f7efa83a0
+2025-12-17 21:14:38,891 [INFO] pharmacy-workflow.u4: Refill request workflow started
+2025-12-17 21:15:36,289 [INFO] pharmacy-workflow.u4: Refill request workflow started
+2025-12-17 21:16:41,174 [INFO] pharmacy-workflow.u4: Refill request workflow started
+2025-12-18 00:00:11,214 [INFO] pharmacy-workflow.u4: Refill request workflow started
+2025-12-18 00:00:11,216 [INFO] pharmacy-workflow.u4: Refill request created and refill deducted: 1d48f438-8add-4fbf-8bf2-480e0f7b9e84
+2025-12-18 00:01:40,377 [INFO] pharmacy-workflow.u4: Workflow started
+2025-12-18 00:01:40,377 [INFO] pharmacy-workflow.u4: Input message: What is the main active ingredient in the Nurofen product you are referring to, and can you specify the exact product variant and your country/region?
+2025-12-18 00:01:40,380 [INFO] pharmacy-workflow.u4: Medication found: name=Nurofen active_ingredient=Ibuprofen

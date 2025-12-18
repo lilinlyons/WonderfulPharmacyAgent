@@ -1,4 +1,4 @@
-from workflows.utils.fetch_medication import get_medication_by_name
+from utils.fetch_medication import get_medication_by_name
 from utils.logging_utils.workflow_logger import get_workflow_logger
 
 def handle(message: str, user_id: str | None = None):

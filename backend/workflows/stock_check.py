@@ -1,6 +1,6 @@
 # workflows/inventory.py
-from workflows.db.db import conn
-from workflows.utils.fetch_medication import get_medication_by_name
+from utils.db.db import conn
+from utils.fetch_medication import get_medication_by_name
 from utils.logging_utils.workflow_logger import get_workflow_logger
 
 
