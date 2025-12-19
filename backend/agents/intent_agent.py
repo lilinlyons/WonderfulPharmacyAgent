@@ -20,6 +20,7 @@ class IntentAgent:
         """
         # ---- Intent classification ----
         try:
+            self.logger.info("Classifying intent for message: %s", user_message)
             intent = self.classify_intent(user_message)
             self.logger.info("Intent: %s", intent)
         except Exception:

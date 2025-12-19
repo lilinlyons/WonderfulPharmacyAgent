@@ -9,7 +9,6 @@ os.makedirs(WORKFLOW_DIR, exist_ok=True)
 
 _LOGGERS: dict[str, logging.Logger] = {}  # one logger per user_id
 
-
 def get_workflow_logger(user_id: str | None) -> logging.Logger:
     """
     Returns a workflow logger scoped per user_id.

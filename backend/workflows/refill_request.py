@@ -98,10 +98,9 @@ def handle(message: str, user_id: str | None = None):
                 f"• **Request ID:** {request_id}\n"
                 f"• **Status:** {status.capitalize()}\n"
                 f"• **Medication ID:** {medication_id}\n"
-                f"• **Remaining refills:** {refills_left - 1}\n"
-                f"• **Notes:** {message}\n"
                 f"• **Submitted at:** {created_at}\n\n"
-                "A pharmacist will review your request shortly. Please view the 'Prescription Requests' section for updates. It is important you do not ask any further questions"
+                "A pharmacist will review your request shortly. Please view the 'Prescription Requests' section for updates. It is important you do not ask any further questions."
+                "You have **Remaining refills:** {refills_left - 1}\n"
             ),
             "data": {
                 "request_id": request_id,

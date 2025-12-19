@@ -4,8 +4,11 @@ from utils.db.db import conn
 from utils.logging_utils.workflow_logger import get_workflow_logger
 
 
-
 def handle(message: str, user_id: str | None = None):
+    """
+    Handle support requests. Creates a new support ticket and provides
+    guidance on next steps without re-offering the action.
+    """
     logger = get_workflow_logger(user_id)
     logger.info("Support request workflow started")
 
@@ -33,7 +36,7 @@ def handle(message: str, user_id: str | None = None):
             (
                 request_id,
                 user_id,
-                "General Support",
+                message,
                 message,
                 status,
                 created_at,
@@ -48,11 +51,10 @@ def handle(message: str, user_id: str | None = None):
         return {
             "type": "support_request",
             "context": (
-                "**Support request opened successfully**\n\n"
-                f"• **Request ID:** {request_id}\n"
-                f"• **Status:** {status.capitalize()}\n"
-                f"• **Submitted at:** {created_at}\n\n"
-                "A pharmacist or support agent will contact you shortly."
+                "Support request opened to reserve Nurofen.\n\n"
+                f"• Request ID: {request_id}\n"
+                f"• Status: Open\n\n"
+                "A pharmacist or support agent will contact you shortly.\n"
             ),
             "data": {
                 "id": request_id,

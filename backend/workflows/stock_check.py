@@ -1,8 +1,7 @@
 # workflows/inventory.py
 from utils.db.db import conn
-from utils.fetch_medication import get_medication_by_name
+from utils.medication.fetch_medication import get_medication_by_name
 from utils.logging_utils.workflow_logger import get_workflow_logger
-
 
 
 def handle(message: str, user_id: str | None = None):
@@ -29,7 +28,7 @@ def handle(message: str, user_id: str | None = None):
         }
 
     try:
-        stock_by_store = check_stock_per_store(medication_id=med["id"])
+        stock_by_store = check_stock_per_store(medication_id=med["id"], user_id=user_id)
     except Exception:
         logger.exception(
             "Failed to fetch inventory for medication_id=%s",
@@ -76,10 +75,11 @@ def handle(message: str, user_id: str | None = None):
     }
 
 
-def check_stock_per_store(medication_id: str):
+def check_stock_per_store(medication_id: str, user_id: str | None = None) -> list[dict]:
     """
     Return stock levels for a medication across all stores.
     """
+    # logger = get_workflow_logger(user_id)
     logger.info("Checking stock per store for medication_id=%s", medication_id)
 
     c = None

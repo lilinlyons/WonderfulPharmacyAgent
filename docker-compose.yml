@@ -10,6 +10,8 @@ services:
     volumes:
       - ./backend:/app
       - ./backend/bert/model_out:/app/bert/model_out
+    command: sh -c "python utils/db/seed.py && uvicorn app:app --host 0.0.0.0 --port 8000"
+
 
   frontend:
     image: node:22-alpine

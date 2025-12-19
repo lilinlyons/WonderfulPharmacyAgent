@@ -2,11 +2,17 @@ import sqlite3
 
 DB_PATH = "utils/db/pharmacy.db"
 
+
 def conn():
-    c = sqlite3.connect(DB_PATH, check_same_thread=False)
-    c.row_factory = sqlite3.Row
-    print("Connection Successful")
-    return c
+    try:
+        c = sqlite3.connect(DB_PATH, check_same_thread=False)
+        c.row_factory = sqlite3.Row
+        print("Connection Successful:", DB_PATH)
+        return c
+
+    except sqlite3.Error as e:
+        print(f"[DB ERROR] Failed to connect to {DB_PATH}: {e}")
+        return {f"[DB ERROR] Failed to connect to {DB_PATH}: {e}"}
 
 def init_schema():
     c = conn()

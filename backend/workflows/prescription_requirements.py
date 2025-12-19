@@ -1,5 +1,5 @@
 # workflows/prescription_requirement.py
-from utils.fetch_medication import get_medication_by_name
+from utils.medication.fetch_medication import get_medication_by_name
 from utils.logging_utils.workflow_logger import get_workflow_logger
 
 

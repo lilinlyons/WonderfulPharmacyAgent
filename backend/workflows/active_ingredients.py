@@ -1,6 +1,6 @@
 # workflows/active_ingredients.py
 from utils.logging_utils.workflow_logger import get_workflow_logger
-from utils.fetch_medication import get_medication_by_name
+from utils.medication.fetch_medication import get_medication_by_name
 
 def handle(message: str, user_id: str | None = None):
     """

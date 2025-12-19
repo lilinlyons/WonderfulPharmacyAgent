@@ -6,3 +6,4 @@ backend/bert/model_out/
 **/.cache
 **/node_modules
 **/__pycache__
+/.pytest_cache
