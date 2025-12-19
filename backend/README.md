@@ -1,3 +1,6 @@
+# Function/Tool Design
+
+
 # Workflow: Active Ingredients Lookup
 
 ## 1. Name and Purpose
@@ -182,5 +185,72 @@ except Exception:
             "context": "Sorry, we couldn't submit your refill request. Please try again."
         }
 ```
+# Workflow: Medication Inventory Lookup
 
-**Current Implementation:** Basic exception handling with transaction rollback; no message queue or email fallback.
+## 1. Name and Purpose
+`stock_check.py` - Retrieves medication inventory and stock availability across all stores. Displays current stock levels per store location.
+
+## 2. Inputs
+- `message` (str, required): Medication name to look up (e.g., "aspirin")
+- `user_id` (str, optional): User identifier for location-based inventory queries
+
+## 3. Output Schema
+```python
+{
+    "type": "inventory",
+    "context": "Medication name: {name}\nAvailability by store:\n- Store {id}: In stock (Qty: {quantity})\n- Store {id}: Out of stock (Qty: {quantity})"
+}
+```
+
+## 4. Error Handling
+- **Medication not found**: Returns "Medication not found in the system."
+- **Medication fetch exception**: Returns "Sorry, there was an internal error while retrieving the medication information."
+- **Inventory check exception**: Returns "Sorry, there was an internal error while checking inventory availability."
+- **No stock in any store**: Returns medication name with "Stock status: Not available in any store."
+
+## 5. Fallback Behavior
+
+**Basic Fallback check**
+```python
+    if not stock_by_store:
+        logger.info("Medication not available in any store")
+        return {
+            "type": "inventory",
+            "context": (
+                f"Medication name: {med['name']}\n"
+                "Stock status: Not available in any store."
+            )
+        }
+```
+
+# Workflow: Support Request Submission
+
+## 1. Name and Purpose
+`support_request.py` - Creates a support ticket for authenticated users. Logs the request message, generates a unique request ID, and notifies user of ticket status.
+
+## 2. Inputs
+- `message` (str, required): Support request description or issue details
+- `user_id` (str, required): Authenticated user identifier required for ticket creation
+
+## 3. Output Schema
+```python
+{
+    "type": "support_request",
+    "context": "Support request opened...\n• Request ID: {id}\n• Status: Open\n\nA pharmacist or support agent will contact you shortly.",
+    "data": {
+        "id": str,
+        "user_id": str,
+        "status": "open",
+        "subject": "General Support",
+        "message": str,
+        "created_at": str
+    }
+}
+```
+
+## 4. Error Handling
+- **Missing user_id**: Returns "Unable to open a support request. User not identified."
+- **Database exception**: Returns "Sorry, we couldn't open your support request. Please try again later." with no rollback (no transaction needed).
+
+## 5. Fallback Behavior
+No fallback added ... yet.

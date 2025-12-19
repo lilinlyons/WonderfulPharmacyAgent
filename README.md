@@ -1,10 +1,10 @@
 # Wonderful Pharmacy Agent - Setup & Launch Guide
 
 A full-stack pharmacy chatbot application with BERT-based intent classification, powered by OpenAI's API.
-
+To see a breakdown of the Tools/utils and APIs look at the README.md in the backend directory.
 ## Prerequisites
 
-- **Node.js** 18+ (for frontend)
+- **Node.js** 22+ (for frontend)
 - **Python** 3.10+ (for backend)
 - **Docker & Docker Compose** (optional, for containerized deployment)
 - **OpenAI API Key** (get one at https://platform.openai.com)
